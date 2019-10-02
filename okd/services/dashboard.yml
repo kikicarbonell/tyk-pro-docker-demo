@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: '2019-10-01T16:12:08Z'
+  labels:
+    app: tyk-dashboard
+  name: tyk-dashboard
+  namespace: tyk-pro-demo
+  resourceVersion: '39448483'
+  selfLink: /api/v1/namespaces/tyk-pro-demo/services/tyk-dashboard
+  uid: 3800831a-e466-11e9-9912-005056941cd3
+spec:
+  clusterIP: 172.30.80.224
+  ports:
+    - name: 3000-tcp
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    - name: 5000-tcp
+      port: 5000
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    deploymentconfig: tyk-dashboard
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

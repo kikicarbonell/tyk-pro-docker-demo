@@ -1,0 +1,29 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: '2019-10-02T15:38:13Z'
+  labels:
+    app: tyk-dashboard
+  name: tyk-portal-test
+  namespace: tyk-pro-demo
+  resourceVersion: '39821860'
+  selfLink: /apis/route.openshift.io/v1/namespaces/tyk-pro-demo/routes/tyk-portal-test
+  uid: a55061d6-e52a-11e9-9912-005056941cd3
+spec:
+  host: www.tyk-portal-test.com
+  port:
+    targetPort: 3000-tcp
+  to:
+    kind: Service
+    name: tyk-dashboard
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+    - conditions:
+        - lastTransitionTime: '2019-10-02T15:38:13Z'
+          status: 'True'
+          type: Admitted
+      host: www.tyk-portal-test.com
+      routerName: router
+      wildcardPolicy: None

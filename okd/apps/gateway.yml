@@ -1,0 +1,102 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: '2019-10-01T16:13:26Z'
+  generation: 6
+  labels:
+    app: tyk-gateway
+  name: tyk-gateway
+  namespace: tyk-pro-demo
+  resourceVersion: '39820289'
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/tyk-pro-demo/deploymentconfigs/tyk-gateway
+  uid: 66015ff2-e466-11e9-9912-005056941cd3
+spec:
+  replicas: 1
+  selector:
+    app: tyk-gateway
+    deploymentconfig: tyk-gateway
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      creationTimestamp: null
+      labels:
+        app: tyk-gateway
+        deploymentconfig: tyk-gateway
+    spec:
+      containers:
+        - image: >-
+            tykio/tyk-gateway@sha256:fef7c0bbc9ccf3476c1ebff7283226c311a9bc067696df7447350c5c1bf1b143
+          imagePullPolicy: Always
+          name: tyk-gateway
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/tyk-gateway/tyk.conf
+              name: volume-25rlm
+              subPath: tyk.conf
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: tyk-conf
+          name: volume-25rlm
+  test: false
+  triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - tyk-gateway
+        from:
+          kind: ImageStreamTag
+          name: 'tyk-gateway:latest'
+          namespace: tyk-pro-demo
+        lastTriggeredImage: >-
+          tykio/tyk-gateway@sha256:fef7c0bbc9ccf3476c1ebff7283226c311a9bc067696df7447350c5c1bf1b143
+      type: ImageChange
+status:
+  availableReplicas: 1
+  conditions:
+    - lastTransitionTime: '2019-10-02T15:02:32Z'
+      lastUpdateTime: '2019-10-02T15:02:32Z'
+      message: Deployment config has minimum availability.
+      status: 'True'
+      type: Available
+    - lastTransitionTime: '2019-10-02T15:32:46Z'
+      lastUpdateTime: '2019-10-02T15:32:49Z'
+      message: replication controller "tyk-gateway-5" successfully rolled out
+      reason: NewReplicationControllerAvailable
+      status: 'True'
+      type: Progressing
+  details:
+    causes:
+      - type: Manual
+    message: manual change
+  latestVersion: 5
+  observedGeneration: 6
+  readyReplicas: 1
+  replicas: 1
+  unavailableReplicas: 0
+  updatedReplicas: 1
